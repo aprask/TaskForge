@@ -3,6 +3,7 @@ package com.api.taskforge.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,11 +43,14 @@ public class User implements UserDetails {
     private Set<Task> tasks;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "date_of_birth", nullable = false)
+    private LocalDate dateOfBirth;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

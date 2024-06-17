@@ -5,11 +5,9 @@ import com.api.taskforge.model.User;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service
 public interface TaskService {
 
     Task createTask(Task task, User user);
