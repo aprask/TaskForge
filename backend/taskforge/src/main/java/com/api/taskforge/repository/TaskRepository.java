@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, UUID> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("SELECT t FROM tasks t WHERE t.user.id =?1")
     Page<Task> findAllByUser(User user, Pageable pageable);

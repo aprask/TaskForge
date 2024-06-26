@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Optional;
 
 
 @Service
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(UUID userId) {
+    public User getUserById(Long userId) {
         if (userId == null) {
             log.error("User ID: {}, is null", (Object) null);
             return null;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(UUID userId, User user) {
+    public User updateUser(Long userId, User user) {
         if (userId == null || user == null) {
             log.error("User {} with ID {} is null", userId, user);
             return null;
@@ -80,11 +80,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID userId) {
+    public void deleteUser(Long userId) {
         if (userId == null) {
             log.error("User with ID: {}, is null and cannot be deleted", (Object) null);
             return;
         }
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+
+        if (email == null) {
+            log.error("Email: {}, is null", (Object) null);
+        }
+
+        return userRepository.findByEmail(email);
     }
 }

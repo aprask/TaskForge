@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -23,13 +24,13 @@ public class TaskController {
     private final UserService userService;
 
     @PostMapping("/createTask/{userId}")
-    public ResponseEntity<Task> createTask(@RequestBody Task task, @PathVariable UUID userId) {
+    public ResponseEntity<Task> createTask(@RequestBody Task task, @PathVariable Long userId) {
         User user = userService.getUserById(userId);
         return ResponseEntity.ok(taskService.createTask(task, user));
     }
 
     @PutMapping("/update/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable UUID taskId, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(taskId, task);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
@@ -39,13 +40,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/deleteTask/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable UUID taskId) {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{taskId}/complete")
-    public ResponseEntity<Task> markTaskAsCompleted(@PathVariable UUID taskId) {
+    public ResponseEntity<Task> markTaskAsCompleted(@PathVariable Long taskId) {
         Task completedTask = taskService.setTaskAsCompleted(taskId);
         if (completedTask != null) {
             return ResponseEntity.ok(completedTask);
@@ -54,21 +55,21 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/getAllTasksByUser/{userId}")
-    public ResponseEntity<Page<Task>> getAllTasksByUser(@PathVariable UUID userId, Pageable pageable) throws BadRequestException {
-        User user = userService.getUserById(userId);
-        if (user == null) {
+    @GetMapping("/getAllTasksByUser/{email}")
+    public ResponseEntity<Page<Task>> getAllTasksByUser(@PathVariable String email, Pageable pageable) throws BadRequestException {
+        Optional<User> user = userService.getUserByEmail(email);
+        if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        Page<Task> tasks = taskService.getAllTasksByUser(user, pageable);
+        Page<Task> tasks = taskService.getAllTasksByUser(user.orElse(null), pageable);
         if (tasks != null) {
             return ResponseEntity.ok(tasks);
         }
-        return ResponseEntity.ok(taskService.getAllTasksByUser(user, pageable));
+        return ResponseEntity.ok(taskService.getAllTasksByUser(user.orElse(null), pageable));
     }
 
     @GetMapping("/getTask/{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable UUID taskId) {
+    public ResponseEntity<Task> getTaskById(@PathVariable Long taskId) {
         Task task = taskService.getTaskById(taskId);
         if (task != null) {
             return ResponseEntity.ok(task);

@@ -22,7 +22,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private UUID id;
+    private Long id;
 
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;

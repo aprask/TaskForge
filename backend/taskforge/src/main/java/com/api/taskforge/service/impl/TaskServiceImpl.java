@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(UUID taskId, Task task) {
+    public Task updateTask(Long taskId, Task task) {
         if (taskId == null) {
             log.error("Task ID: {}, is null", (Object) null);
             return null;
@@ -72,7 +72,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(UUID taskId) {
+    public void deleteTask(Long taskId) {
         if (taskId == null) {
             log.error("Task with ID: {}, is null and cannot be deleted", (Object) null);
             return;
@@ -81,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task setTaskAsCompleted(UUID taskId) {
+    public Task setTaskAsCompleted(Long taskId) {
         if (taskId == null) {
             log.error("Task with ID: {}, is null", (Object) null);
             return null;
@@ -110,7 +110,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getTaskById(UUID taskId) {
+    public Task getTaskById(Long taskId) {
         if (taskId == null) {
             log.error("Task ID {} is null", (Object) null);
             return null;

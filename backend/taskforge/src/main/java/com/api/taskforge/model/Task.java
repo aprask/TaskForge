@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity(name = "tasks")
 @Getter
@@ -15,7 +14,7 @@ public class Task {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private UUID id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;

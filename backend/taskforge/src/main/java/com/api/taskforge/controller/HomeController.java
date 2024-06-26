@@ -10,9 +10,4 @@ public class HomeController {
     public String home() {
         return "Welcome to Task Forge";
     }
-
-    @RequestMapping("/restricted")
-    public String restricted() {
-        return "RESTRICTED";
-    }
 }

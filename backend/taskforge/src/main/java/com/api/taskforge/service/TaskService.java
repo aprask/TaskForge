@@ -6,21 +6,19 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.UUID;
-
 public interface TaskService {
 
     Task createTask(Task task, User user);
 
-    Task updateTask(UUID taskId, Task taskDetails);
+    Task updateTask(Long taskId, Task taskDetails);
 
-    void deleteTask(UUID taskId);
+    void deleteTask(Long taskId);
 
-    Task setTaskAsCompleted(UUID taskId);
+    Task setTaskAsCompleted(Long taskId);
 
     Page<Task> getAllTasksByUser(User user, Pageable pageable) throws BadRequestException;
 
-    Task getTaskById(UUID taskId);
+    Task getTaskById(Long taskId);
 
     Page<Task> getAllTasks(Pageable pageable) throws BadRequestException;
 
